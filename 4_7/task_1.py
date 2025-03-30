@@ -1,0 +1,11 @@
+# -*- coding: cp1251 -*-
+str=input("¬ведите текст:")
+
+list=['а','е','Є','и','й','о','у','э','ю','€']
+
+list_glasnie =[i for i in str if i in list]
+
+print("—писок гласных букв:",list_glasnie)
+print("ƒлина списка:",len(list_glasnie) )
+
+
