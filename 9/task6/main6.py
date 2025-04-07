@@ -52,7 +52,7 @@ for key,value in text_d.items():
     k=str(key)
     v=str(value)
     text=k+': '+v
-    #print(k,': ',value)
+    
 
 for key,value in sorted(new_di.items()):
    
