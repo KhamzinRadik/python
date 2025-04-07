@@ -2,6 +2,7 @@
 from shlex import join
 import openpyxl
 import os
+import win 
 
 
 def path_p(nam_f):
@@ -140,11 +141,16 @@ def zapis_v_excel(f_salido,f_rashod):
 	wb.save(file_name_path)
 
 
+win.Window()
+
+
+
 
 f_salido={}
 f_rashod={}
 poluchenie_slovarey(f_salido,f_rashod)
 zapis_v_excel(f_salido,f_rashod)
+
 # print('f_salido\n',f_salido)
 # print('\n\n\n')
 # print('f_rashod\n',f_rashod)
