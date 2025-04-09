@@ -18,53 +18,74 @@ with open(file_text, 'r') as f_namlist:
 
         
 count=0
-print(len(name_mail_age))
+i=0
 
-# for i in range (len(name_mail_age)):
-#     print('I :',i ,'\n\t')
-i=1
-for i_el in name_mail_age:
-         print('\ti_el',i_el.split())
-         try:
-             if len(name_mail_age[i])<3:
+
+dirrectory=['10','task3']
+file_text_b_l=path_p(dirrectory,'bad.log')
+         
             
-                     raise (i,'не полная информация')
-         except:
-             print (i,'не полная информация')
-             count+=1
-         try:
-            if not i_el.isalpha():        
-                raise (i,'имя содержит не только буквы')
-         except:
-             print(i,'имя содержит не только буквы')
-             count+=1
-        # try:
-        #     if not '@' in name_mail_age[1]:
-        #         raise ('не корректная почта')      
-        # except:
-        #     print('не корректная почта')   
-        #     count+=1
+with open(file_text_b_l, 'w') as f_namlist:
+    for i_el in name_mail_age:
+             count=0
+            
+             bad_log=[]
+             good_log=[]
+             elstr=i_el.split()
+             
+             try:
+                  
+                  if len(elstr)<=2:
+                     
+                   raise 
+             except:
+                  print (i,'не полная информация')
+                  count+=1
+             try:
+            
+                if not elstr[0].isalpha(): 
+                    
+                    raise 
+             except:
+                 print(i,elstr[0],'имя содержит не только буквы')
+                 count+=1
+         
+             try:
+                if (not '@' in elstr[1] or not '.' in elstr[1]):
+                    raise
+                if len(elstr[1])<3:
+                    raise
+                    count+=1
+             except:
+                print('не корректная почта1111',elstr)   
+                count+=1
         
-        # try:
-        #     if name_mail_age[2].isdigit():
-        #         age=int(name_mail_age[2])
-        #     else:
-        #             print('не корректный возраст')
-        # except:
-        #     print('не корректный возраст') 
-        #     count+=1
-        # try:
-        #     if (age<10 or age >99):
-        #         raise ('не корректный возраст')
-        # except:
-        #     print('не корректный возраст')
-        #     count+=1
-        # if count<1:
-        #     name_mail_age_str=''
-        #     for i in name_mail_age:
-        #         name_mail_age_str+=i+' '
-        #     print (name_mail_age_str)
-        #     with open(file_text, 'a') as f_namlist:
-        #         f_namlist.write(name_mail_age_str)
+             try:
+                if elstr[2].isdigit():
+                    age=int(elstr[2])
+                else:
+                    raise
+                    count+=1
+                if (age<10 or age >99):
+                    
+                    raise
+                    count+=1
+             except:
+                print('не корректный возраст')
+                count+=1
+             
+             
+             if count >= 1:
+                            
+                  f_namlist.write(name_mail_age[i]+'\n')
+                  print('dellite ',name_mail_age.pop(i))
+                  i-=1
+              
+             i+=1
+            
+file_text_b_l=path_p(dirrectory,'good.log')
+with open(file_text_b_l, 'w') as f_namlist:
+                for i_el in  name_mail_age:
+                    f_namlist.write(i_el+'\n')
 
-         i+=1
+         
