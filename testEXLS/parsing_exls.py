@@ -27,7 +27,7 @@ def poluchenie_slovarey(f_salido,f_rashod):
 	type(wb)
 
 
-	poisk='Сальдо на конец  периода (экономия +), (перерасход -) от начисленного'
+	poisk='от начисленного'
 	poisk=ub_pr(poisk)
 	poisk_raschod='ИТОГО стоимость услуг в год с НДС'
 	poisk_raschod=ub_pr(poisk_raschod)
@@ -38,6 +38,7 @@ def poluchenie_slovarey(f_salido,f_rashod):
 	sheets_name=[]
 	for sheet in sheets:#передача названий листов в список
 		sheets_name.append(sheet)
+		#print(sheets_name,end='\n')
 	# if 'New Sheet Result' in sheets_name:
 	#     print('list est!')
 	# else:
@@ -50,8 +51,8 @@ def poluchenie_slovarey(f_salido,f_rashod):
 	for i in range (len(sheets_name)):
 
 		sheet = wb[sheets_name[i]]#обращаемся к листу по названию листа
-		print('\n\n',sheet)
-		print(sheet['A5'].value)
+		#print('\n\n',sheet)
+		#print(sheet['A5'].value)
 		dimensions = sheet.max_row
 
 		
@@ -60,10 +61,12 @@ def poluchenie_slovarey(f_salido,f_rashod):
 		# # печатаем значение ячейки A1
 				a='A'+str(i_col)
 				b='B'+str(i_col)
-				#print(a)
+				#print(b)
 				sh=sheet[a].value
+				#print(sh)
 				sh=str(sh)
 				sh=ub_pr(sh)
+				print(sh)
 				count_raschod=0
 				count=0
 				for i_el in sh:
@@ -79,14 +82,14 @@ def poluchenie_slovarey(f_salido,f_rashod):
 					rashod={sheet[a].value:(sheet[b].value)}
 					f_rashod[str(sheet['A5'].value)]=rashod
 				
-				if count>9 :
+				if count>1 :
 					#print('\n',sheet[a].value,end=': ')
 					#print(sheet[b].value)
 					salido={sheet[a].value:(sheet[b].value)}
 					f_salido[str(sheet['A5'].value)]=salido
-	print('f_rashod',f_rashod)
-	print('f_salido',f_salido)
-	print('\n\n\n')
+	#print('f_rashod',f_rashod)
+	#print('f_salido',f_salido)
+	# print('\n\n\n')
 
 
 
@@ -103,28 +106,28 @@ def zapis_v_excel(f_salido,f_rashod):
 	c2.value='сальдо'
 	c3= sheet.cell(row = 1, column = 3)
 	c3.value='расход'
-	print(f_salido)
+	#print(f_salido)
 	i=2
 	for i_el in f_salido:
-		print (i)
+		#print (i_el)
 		c1 = sheet.cell(row = i, column = 1)
 		c1.value=i_el
 		i+=1
 	i=2	
 	for k in f_salido.values():
-			print('k',k)
+			#print('k',k)
 			for key,value in k.items():
-				print('key',key)
-				print('value',value)
+				#print('key',key)
+				#print('value',value)
 				c2 = sheet.cell(row = i, column = 2)
 				c2.value=value
 				i+=1
 	i=2
 	for k in f_rashod.values():
-			print('k',k)
+			#print('k',k)
 			for key,value in k.items():
-				print('key',key)
-				print('value',value)
+				#print('key',key)
+				#print('value',value)
 				c3 = sheet.cell(row = i, column = 3)
 				c3.value=value
 				i+=1
@@ -141,7 +144,7 @@ def zapis_v_excel(f_salido,f_rashod):
 	wb.save(file_name_path)
 
 
-win.Window()
+#win.Window()
 
 
 

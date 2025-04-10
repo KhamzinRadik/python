@@ -1,4 +1,6 @@
-radik hamza@mail.ru aa
-hamza@mail.ru 37
-radik hamza@mail.ru 37
-radik hamza@mail.ru 37
+radik @. 37 : Поле «Маил» НЕ корректно! 
+radik hamza@mailru 37 : Поле «Маил» должно содержать "." и "@" ! 
+radik hamzamail.ru 37 : Поле «Маил» должно содержать "." и "@" ! 
+radik24 hamza@mail.ru 37 : Поле «Имя» не корректно! 
+hamza@mail.ru 37 : не полная информация о пользователе! 
+radik hamza@mail.ru aa : Поле «Возраст» НЕ представляет число от 10 до 99! 
