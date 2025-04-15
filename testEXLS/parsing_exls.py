@@ -3,7 +3,7 @@ from shlex import join
 import openpyxl
 import os
 import win 
-
+from openpyxl.styles import Alignment
 
 def path_p(nam_f):
 	path=os.path.join('testEXLS',nam_f)
@@ -19,16 +19,17 @@ def ub_pr(strf):# убираем лишние пробелы и приводим к одному регистру
 	
 	strf=strf.split()
 	return strf
-def poluchenie_slovarey(f_salido,f_rashod):
+def poluchenie_slovarey(f_salido,f_rashod,f_viruchka):
 	file_name='2025_otchet.xlsx'
 	file_name_path=path_p(file_name)
 
 	wb = openpyxl.load_workbook(file_name_path, data_only=True)
 	type(wb)
 
-
+	viruchka='Выручка по содержаниею жилых помещений (начислено)'
 	poisk='от начисленного'
 	poisk=ub_pr(poisk)
+	poisk_viruchka=ub_pr(viruchka)
 	poisk_raschod='ИТОГО стоимость услуг в год с НДС'
 	poisk_raschod=ub_pr(poisk_raschod)
 
@@ -66,9 +67,10 @@ def poluchenie_slovarey(f_salido,f_rashod):
 				#print(sh)
 				sh=str(sh)
 				sh=ub_pr(sh)
-				print(sh)
+				#print(sh)
 				count_raschod=0
 				count=0
+				count_viruchka=0
 				for i_el in sh:
 					if i_el in poisk_raschod:
 						count_raschod+=1
@@ -76,6 +78,9 @@ def poluchenie_slovarey(f_salido,f_rashod):
 					
 						count+=1
 						#print(count)
+					if i_el in poisk_viruchka:
+						count_viruchka+=1
+
 				if count_raschod>6:
 					#print('\n',sheet[a].value,end=': ')
 					#print(sheet[b].value)
@@ -87,6 +92,13 @@ def poluchenie_slovarey(f_salido,f_rashod):
 					#print(sheet[b].value)
 					salido={sheet[a].value:(sheet[b].value)}
 					f_salido[str(sheet['A5'].value)]=salido
+				if count_viruchka>4:
+					# print('\n',sheet[a].value,end=': ')
+					# print(sheet[b].value)
+					viruch={sheet[a].value:(sheet[b].value)}
+					print(viruch)
+					f_viruchka[str(sheet['A5'].value)]=viruch
+					print(f_viruchka)
 	#print('f_rashod',f_rashod)
 	#print('f_salido',f_salido)
 	# print('\n\n\n')
@@ -94,18 +106,21 @@ def poluchenie_slovarey(f_salido,f_rashod):
 
 
 
-def zapis_v_excel(f_salido,f_rashod):
+def zapis_v_excel(f_salido,f_rashod,f_viruchka):
 	file_name='2025_otchet.xlsx'
 	file_name_path=path_p(file_name)
 
 	wb = openpyxl.Workbook() 
 	sheet = wb.active
 	c1= sheet.cell(row = 1, column = 1)
-	c1.value='улица'
+	c1.value='адрес'
 	c2= sheet.cell(row = 1, column = 2)
-	c2.value='сальдо'
+	c2.value='Сальдо на конец  периода (экономия +), (перерасход -) от начисленного'
 	c3= sheet.cell(row = 1, column = 3)
-	c3.value='расход'
+	c3.value='ИТОГО стоимость услуг в год с НДС '
+	
+	c4= sheet.cell(row = 1, column = 4)
+	c4.value='Выручка по содержаниею жилых помещений (начислено)'
 	#print(f_salido)
 	i=2
 	for i_el in f_salido:
@@ -134,6 +149,18 @@ def zapis_v_excel(f_salido,f_rashod):
 				# c1 = sheet.cell(row = i, column = 1)
 				
 				# c1.value=k
+	i=2
+	for k in f_viruchka.values():
+			#print('k',k)
+			for key,value in k.items():
+				print('key',key)
+				print('value',value)
+				c4 = sheet.cell(row = i, column = 4)
+				c4.value=value
+				i+=1
+				# c1 = sheet.cell(row = i, column = 1)
+				
+				# c1.value=k
 		
 
 	file_name='2025_otchet_result.xlsx'
@@ -141,22 +168,28 @@ def zapis_v_excel(f_salido,f_rashod):
 	sheet.column_dimensions["A"].width = 40
 	sheet.column_dimensions["B"].width = 15
 	sheet.column_dimensions["C"].width = 15
+	sheet.column_dimensions["D"].width = 15
+	sheet["A1"].alignment = Alignment(wrapText=True)
+	sheet["B1"].alignment = Alignment(wrapText=True)
+	sheet["C1"].alignment = Alignment(wrapText=True)
+	sheet["D1"].alignment = Alignment(wrapText=True)
 	wb.save(file_name_path)
 
 
-#win.Window()
 
 
 
 
 f_salido={}
 f_rashod={}
-poluchenie_slovarey(f_salido,f_rashod)
-zapis_v_excel(f_salido,f_rashod)
+f_viruchka={}
+poluchenie_slovarey(f_salido,f_rashod,f_viruchka)
+zapis_v_excel(f_salido,f_rashod,f_viruchka)
 
-# print('f_salido\n',f_salido)
+print('f_salido\n',f_salido)
 # print('\n\n\n')
-# print('f_rashod\n',f_rashod)
+print('f_rashod\n',f_rashod)
+print('f_viruchka\n',f_viruchka)
 # speak_file=open(file_name_path,'r')
 # file=speak_file.readlines()
 
